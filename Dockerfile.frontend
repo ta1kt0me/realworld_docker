@@ -1,0 +1,15 @@
+FROM node:12.8.0
+
+ENV LANG C.UTF-8
+
+WORKDIR /app
+
+RUN apt-get update -y -q && \
+			apt-get install -y \
+			less
+
+COPY frontend/package.json /app/
+
+RUN npm install
+
+COPY frontend /app/

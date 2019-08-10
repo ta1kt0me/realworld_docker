@@ -1,0 +1,24 @@
+FROM ruby:2.4.0
+
+ENV LANG C.UTF-8
+
+WORKDIR /app
+
+RUN mkdir -p /app/tmp/pids /app/tmp/cache
+
+RUN apt-get update -y -q && \
+			apt-get install -y \
+			build-essential \
+			less \
+			sqlite3 \
+			libsqlite3-dev \
+			zlib1g-dev
+
+RUN gem install bundler -v 1.17.3
+
+COPY backend/Gemfile backend/Gemfile.lock /app/
+
+RUN bundle install --jobs $(getconf _NPROCESSORS_ONLN) --path /bundle
+RUN cp -r /usr/local/bundle /app/.bundle
+
+COPY backend /app/
