@@ -2,7 +2,23 @@
 
 set -x
 
-bin_dir=$(dirname $0)
+bin_dir=$(realpath $(dirname $0))
 root_dir=$bin_dir/..
 cd $root_dir
 git submodule update -i
+
+# setup frontend
+cd $root_dir/frontend
+sed -i -e "s/'https.*\/api';/'http:\/\/localhost:3000\/api';/" src/agent.js
+
+# setup frontend
+cd $root_dir/backend
+git grep -l 'ActiveRecord::Migration' db/migrate | xargs sed --in-place='' -e "s/ActiveRecord::Migration$/ActiveRecord::Migration[4.2]/g"
+sed -i -e "s/gem 'devise'.*/gem 'devise'/" Gemfile
+sed -i -e "s/localhost:3000/localhost:4100/" config/secrets.yml
+
+cat <<EOF > config/initializers/devise_controller.rb
+Rails.application.config.to_prepare do
+  DeviseController.respond_to :json
+end
+EOF
