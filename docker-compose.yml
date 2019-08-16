@@ -2,6 +2,8 @@ version: '3.7'
 
 services:
   backend:
+    volumes:
+      - ./backend:/app
     build:
       context: .
       dockerfile: ./Dockerfile.backend
@@ -15,6 +17,8 @@ services:
     tty: true
 
   frontend:
+    volumes:
+      - ./frontend:/app
     build:
       context: .
       dockerfile: ./Dockerfile.frontend
