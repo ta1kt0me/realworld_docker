@@ -4,25 +4,25 @@
 
 if [ "$(uname)" == "Darwin" ]; then
   command -v gsed >/dev/null 2>&1 || { echo >&2 "I require gsed but it's not installed. Execute 'brew install gnu-sed'. Aborting."; exit 1; }
-  SED=gsed
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  SED=sed
+  SED="gsed"
+elif [ "$(uname -s)" == "Linux" ]; then
+  SED="sed"
 else
   echo Unknown OS
   exit 1
 fi
 
-bin_dir=$(cd $(dirname $0) && pwd)
+bin_dir=$(cd "$(dirname "$0")" && pwd)
 root_dir=$bin_dir/..
-cd $root_dir
+cd "$root_dir" || return
 git submodule update -i
 
 # setup frontend
-cd $root_dir/frontend
-$SED -i -e "s/'https.*\/api';/'http:\/\/localhost:3000\/api';/" src/agent.js
+cd "$root_dir"/frontend || return
+$SED -i -e "s/'https.*\\/api';/'http:\\/\\/localhost:3000\\/api';/" src/agent.js
 
 # setup frontend
-cd $root_dir/backend
+cd "$root_dir"/backend || return
 git grep -l 'ActiveRecord::Migration$' db/migrate | xargs -I"%" $SED -i -e 's/ActiveRecord::Migration$/ActiveRecord::Migration[4.2]/g' %
 $SED -i -e "s/^gem 'devise',.*/gem 'devise'/" Gemfile
 $SED -i -e "s/localhost:3000/localhost:4100/" config/secrets.yml
