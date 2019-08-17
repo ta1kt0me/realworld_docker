@@ -1,6 +1,6 @@
 [submodule "backend"]
 	path = backend
-	url = ssh://git@github.com/gothinkster/rails-realworld-example-app
+	url = ssh://git@github.com/ta1kt0me/rails-realworld-example-app
 [submodule "frontend"]
 	path = frontend
-	url = ssh://git@github.com/gothinkster/react-redux-realworld-example-app
+	url = ssh://git@github.com/ta1kt0me/react-redux-realworld-example-app
