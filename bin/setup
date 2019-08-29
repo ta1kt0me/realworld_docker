@@ -21,7 +21,7 @@ git submodule update -i
 cd "$root_dir"/frontend || exit 1
 $SED -i -e "s/'https.*\\/api';/'http:\\/\\/localhost:3000\\/api';/" src/agent.js
 
-# setup frontend
+# setup backend
 cd "$root_dir"/backend || exit 1
 git grep -l 'ActiveRecord::Migration$' db/migrate | xargs -I"%" $SED -i -e 's/ActiveRecord::Migration$/ActiveRecord::Migration[4.2]/g' %
 $SED -i -e "s/^gem 'devise',.*/gem 'devise'/" Gemfile
