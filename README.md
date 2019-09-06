@@ -29,10 +29,36 @@ $ open http://localhost:4100
 
 ### 2. 関心のあるタグのFeed一覧を追加する
 
-検討中
+やりたいことは次の２つ
 
-- ユーザーは関心のあるタグを登録できる
-- ヘッダーの`News`メニューをクリックすると関心のあるタグのついているFeedの一覧を作成日の降順で見れる
+- ユーザーは関心のあるタグを登録/削除できる
+- ユーザーは関心のあるタグのArticleの一覧を見れる
+
+[画面イメージ](https://yochiyochirb.slack.com/archives/CM364SBR8/p1567788439016000)
+もう少し詳しい仕様や挙動。
+
+- `/@username`のページに`NewsArticles`タブを追加する
+- `NewsArticles`タブをクリックすると`/@username/news`を表示する
+- `/@username/news`の内容
+  - `NewsArticles`タブを選択状態にする
+  - 左側にタグの一覧を表示する
+  - 右側に選択したタグのArticleの一覧を表示する
+- 未選択のタグを選択する
+  - user_tagsにレコードを登録するリクエストを発行する
+  - タグを選択状態に色を変更する
+  - 選択したタグの一覧を含んだArticleの一覧を表示する
+- 選択済みのタグを選択する
+  - user_tagsにレコードを削除するリクエストを発行する
+  - タグを未選択状態に色を変更する
+  - 選択したタグの一覧を含んだArticleの一覧を表示する
+
+- backend
+  - `POST /api/user_tags`
+    - ユーザーの関心のあるタグを追加する
+  - `DELETE /api/user_tags/:id`
+    - ユーザーの関心のあるタグを削除する
+  - `GET /api/articles/feed`
+    - 関心のあるタグのニュースの一覧を取得する
 
 ### 3. RailsでScaffoldするアプリをAPI + SPAで作る
 
