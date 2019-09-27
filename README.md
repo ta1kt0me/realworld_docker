@@ -57,7 +57,7 @@ $ open http://localhost:4100
     - ユーザーの関心のあるタグを追加する
   - `DELETE /api/user_tags/:id`
     - ユーザーの関心のあるタグを削除する
-  - `GET /api/articles/feed`
+  - `GET /api/articles/news`
     - 関心のあるタグのニュースの一覧を取得する
 
 ### 3. RailsでScaffoldするアプリをAPI + SPAで作る
